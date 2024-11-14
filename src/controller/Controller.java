@@ -8,6 +8,7 @@ import model.Animal;
 import model.AnimalDAO;
 import model.Tutor;
 import model.TutorDAO;
+import model.Veterinario;
 import model.VeterinarioDAO;
 import view.AnimalTableModel;
 import view.GenericTableModel;
@@ -17,6 +18,7 @@ import view.VeterinarioTableModel;
 public class Controller {
     private static Tutor tutorSelecionado = null;
     private static Animal animalSelecionado = null;
+    private static Veterinario veterinarioSelecionado = null;
     private static JTextField tutorSelecionadoTextField = null;
     private static JTextField animalSelecionadoTextField = null;
     
@@ -33,6 +35,10 @@ public class Controller {
         return tutorSelecionado;
     }
     
+    public static Veterinario getVeterinarioSelecionado() {
+        return veterinarioSelecionado;
+    }
+    
     public static void setSelected(Object selected) {
         if (selected instanceof Tutor) {
             tutorSelecionado = (Tutor) selected;
@@ -41,6 +47,8 @@ public class Controller {
         } else if (selected instanceof Animal) {
             animalSelecionado = (Animal) selected;
             animalSelecionadoTextField.setText(animalSelecionado.getNome());
+        } else if (selected instanceof Veterinario) {
+            veterinarioSelecionado = (Veterinario) selected;
         }
     }
     
@@ -62,11 +70,47 @@ public class Controller {
         }
     }
     
-    public static List<Object> getTutorPorNomeSimiliar(String nome) {
-        return TutorDAO.getInstance().retrieveBySimilarName(nome);
+    public static void atualizaBuscaPorNomeSimiliar(JTable table, String nome) {
+         if (table.getModel() instanceof TutorTableModel) {
+            ((GenericTableModel) table.getModel()).addListOfItems(TutorDAO.getInstance().retrieveBySimilarName(nome));
+        } else if (table.getModel() instanceof VeterinarioTableModel) {
+            ((GenericTableModel) table.getModel()).addListOfItems(VeterinarioDAO.getInstance().retrieveBySimilarName(nome));
+        }
     }
     
-    public static List<Object> getVeterinarioPorNomeSimiliar(String nome) {
-        return VeterinarioDAO.getInstance().retrieveBySimilarName(nome);
+    public static List<Object> getAllTutor() {
+        return TutorDAO.getInstance().retrieveAll();
+    }
+    
+    public static List<Object> getAllVeterinario() {
+        return VeterinarioDAO.getInstance().retrieveAll();
+    }
+    
+    public static List<Object> getAllAnimal() {
+        return AnimalDAO.getInstance().retrieveAll();
+    }
+    
+    public static Tutor adicionarTutor(String nome, String endereco, String cpf, String celular) {
+        Tutor novoTutor = TutorDAO.getInstance().create(nome, endereco, cpf, celular);
+        return novoTutor;
+    }
+    
+    public static Veterinario adicionarVeterinario(String nome, String endereco, String cpf, String celular, String crmv) {
+        Veterinario novoVeterinario = VeterinarioDAO.getInstance().create(nome, endereco, cpf, celular, crmv);
+        return novoVeterinario;
+    }
+    
+    public static void removerTutor(Tutor tutor) {
+        TutorDAO.getInstance().delete(tutor);
+        tutorSelecionadoTextField.setText("");
+    }
+    
+    public static void removerVeterinario(Veterinario veterinario) {
+        VeterinarioDAO.getInstance().delete(veterinario);
+    }
+    
+    public static void removerAnimal(Animal animal) {
+        AnimalDAO.getInstance().delete(animal);
+        animalSelecionadoTextField.setText("");
     }
 }

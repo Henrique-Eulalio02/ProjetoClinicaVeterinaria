@@ -6,8 +6,10 @@
 package view;
 
 import controller.Controller;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import model.AnimalDAO;
+import javax.swing.SwingUtilities;
 import model.TutorDAO;
 
 /**
@@ -126,13 +128,33 @@ public class Principal extends javax.swing.JFrame {
         });
 
         jButton4.setText("Todos");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Novo");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("Apagar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Buscar:");
 
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
         jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextField4KeyTyped(evt);
@@ -288,12 +310,92 @@ public class Principal extends javax.swing.JFrame {
 
     private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
         // TODO add your handling code here:
-        if (jTable2.getModel() instanceof TutorTableModel) {
-            ((GenericTableModel) jTable2.getModel()).addListOfItems(Controller.getTutorPorNomeSimiliar(jTextField4.getText()));
-        } else if (jTable2.getModel() instanceof VeterinarioTableModel) {
-            ((GenericTableModel) jTable2.getModel()).addListOfItems(Controller.getVeterinarioPorNomeSimiliar(jTextField4.getText()));
-        }
+       Controller.atualizaBuscaPorNomeSimiliar(jTable2, jTextField4.getText());
     }//GEN-LAST:event_jTextField4KeyTyped
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        if (jTable2.getModel() instanceof TutorTableModel) {
+            AdicionarTutor adicionarTutorPanel = new AdicionarTutor();
+          
+            JDialog dialog = new JDialog(this, "Adicionar Tutor", true);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+           
+            dialog.getContentPane().add(adicionarTutorPanel);
+
+          
+            dialog.setSize(400, 400);
+            dialog.setLocationRelativeTo(this); 
+
+            dialog.setVisible(true);
+        } else if (jTable2.getModel() instanceof VeterinarioTableModel) {
+            AdicionarVeterinario adicionarVeterinarioPanel = new AdicionarVeterinario();
+            
+            JDialog dialog = new JDialog(this, "Adicionar Veterinario", true);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+           
+            dialog.getContentPane().add(adicionarVeterinarioPanel);
+
+          
+            dialog.setSize(400, 450);
+            dialog.setLocationRelativeTo(this); 
+
+            dialog.setVisible(true);
+        }     
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        if (jTable2.getModel() instanceof TutorTableModel) {
+            ((GenericTableModel) jTable2.getModel()).addListOfItems(Controller.getAllTutor());
+            jTextField4.setText("");
+        } else if (jTable2.getModel() instanceof VeterinarioTableModel) {
+            ((GenericTableModel) jTable2.getModel()).addListOfItems(Controller.getAllVeterinario());
+            jTextField4.setText("");
+        } else if (jTable2.getModel() instanceof AnimalTableModel) {
+            ((GenericTableModel) jTable2.getModel()).addListOfItems(Controller.getAllAnimal());
+            jTextField4.setText("");
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        if (jTable2.getModel() instanceof TutorTableModel) {
+            RemoverTutor removerTutor = new RemoverTutor();
+            
+            JDialog dialog = new JDialog(this, "Remover Tutor", true);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+           
+            dialog.getContentPane().add(removerTutor);
+
+          
+            dialog.setSize(400, 280);
+            dialog.setLocationRelativeTo(this); 
+
+            dialog.setVisible(true);
+        } else if (jTable2.getModel() instanceof VeterinarioTableModel) {
+            RemoverVeterinario removerVeterinario = new RemoverVeterinario();
+            
+            JDialog dialog = new JDialog(this, "Remover Veterinario", true);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+           
+            dialog.getContentPane().add(removerVeterinario);
+
+          
+            dialog.setSize(400, 280);
+            dialog.setLocationRelativeTo(this); 
+
+            dialog.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments

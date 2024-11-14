@@ -4,14 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/henri/Documents/NetBeansProjects/ClinicaVeterinaria/src/controller/Controller.java</file>
-            <file>file:/C:/Users/henri/Documents/NetBeansProjects/ClinicaVeterinaria/src/model/PessoaDAO.java</file>
-            <file>file:/C:/Users/henri/Documents/NetBeansProjects/ClinicaVeterinaria/src/view/PessoaTableModel.java</file>
+            <file>file:/C:/Users/henri/Documents/NetBeansProjects/ClinicaVeterinaria/src/view/VeterinarioTableModel.java</file>
+            <file>file:/C:/Users/henri/Documents/NetBeansProjects/ClinicaVeterinaria/src/model/TutorDAO.java</file>
             <file>file:/C:/Users/henri/Documents/NetBeansProjects/ClinicaVeterinaria/src/model/AnimalDAO.java</file>
-            <file>file:/C:/Users/henri/Documents/NetBeansProjects/ClinicaVeterinaria/src/model/Pessoa.java</file>
-            <file>file:/C:/Users/henri/Documents/NetBeansProjects/ClinicaVeterinaria/src/model/Animal.java</file>
+            <file>file:/C:/Users/henri/Documents/NetBeansProjects/ClinicaVeterinaria/src/view/TutorTableModel.java</file>
             <file>file:/C:/Users/henri/Documents/NetBeansProjects/ClinicaVeterinaria/src/model/DAO.java</file>
             <file>file:/C:/Users/henri/Documents/NetBeansProjects/ClinicaVeterinaria/src/view/Principal.java</file>
-            <file>file:/C:/Users/henri/Documents/NetBeansProjects/ClinicaVeterinaria/src/view/AnimalTableModel.java</file>
         </group>
     </open-files>
 </project-private>
