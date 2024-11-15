@@ -347,7 +347,21 @@ public class Principal extends javax.swing.JFrame {
             dialog.setLocationRelativeTo(this); 
 
             dialog.setVisible(true);
-        }     
+        } else if (jTable2.getModel() instanceof AnimalTableModel) {
+            AdicionarAnimal adicionarAnimalPanel = new AdicionarAnimal();
+            
+            JDialog dialog = new JDialog(this, "Adicionar Animal", true);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+           
+            dialog.getContentPane().add(adicionarAnimalPanel);
+
+          
+            dialog.setSize(400, 450);
+            dialog.setLocationRelativeTo(this); 
+
+            dialog.setVisible(true);
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -388,6 +402,20 @@ public class Principal extends javax.swing.JFrame {
 
            
             dialog.getContentPane().add(removerVeterinario);
+
+          
+            dialog.setSize(400, 280);
+            dialog.setLocationRelativeTo(this); 
+
+            dialog.setVisible(true);
+        } else if (jTable2.getModel() instanceof AnimalTableModel) {
+            RemoverAnimal removerAnimal = new RemoverAnimal();
+            
+            JDialog dialog = new JDialog(this, "Remover Animal", true);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+           
+            dialog.getContentPane().add(removerAnimal);
 
           
             dialog.setSize(400, 280);

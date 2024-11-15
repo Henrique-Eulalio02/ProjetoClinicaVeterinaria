@@ -39,6 +39,10 @@ public class Controller {
         return veterinarioSelecionado;
     }
     
+    public static Animal getAnimalSelecionado() {
+        return animalSelecionado;
+    }
+    
     public static void setSelected(Object selected) {
         if (selected instanceof Tutor) {
             tutorSelecionado = (Tutor) selected;
@@ -93,6 +97,10 @@ public class Controller {
     public static Tutor adicionarTutor(String nome, String endereco, String cpf, String celular) {
         Tutor novoTutor = TutorDAO.getInstance().create(nome, endereco, cpf, celular);
         return novoTutor;
+    }
+    
+    public static Animal adicionarAnimal(String nome, String especie, String raca, int idade, String sexo, Tutor tutor, Veterinario veterinario) {
+        return AnimalDAO.getInstance().create(nome, especie, raca, idade, sexo, tutor.getId(), veterinario.getId());
     }
     
     public static Veterinario adicionarVeterinario(String nome, String endereco, String cpf, String celular, String crmv) {
