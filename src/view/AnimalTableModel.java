@@ -10,7 +10,7 @@ import model.AnimalDAO;
 public class AnimalTableModel extends GenericTableModel {
 
     public AnimalTableModel(List vDados){
-        super(vDados, new String[]{"Nome", "Especie", "Raca", "Idade", "Sexo", "TutorID"});
+        super(vDados, new String[]{"Nome", "Especie", "Raca", "Idade", "Sexo", "Nome Tutor"});
     }
     
     @Override
@@ -50,7 +50,7 @@ public class AnimalTableModel extends GenericTableModel {
             case 4:
                 return a.getSexo();
             case 5: 
-                return a.getTutorId();
+                return AnimalDAO.getInstance().retriveTutorName(a.getTutorId());
             default:
                 throw new IndexOutOfBoundsException("Column Index out of bounds");
         }
@@ -77,7 +77,7 @@ public class AnimalTableModel extends GenericTableModel {
             case 4:
                 a.setSexo((String)aValue);
             case 5:
-                a.setTutorId((int)aValue);
+                AnimalDAO.getInstance().retriveTutorName(a.getTutorId());
             default:
                 throw new IndexOutOfBoundsException("Column Index out of bounds");
         }

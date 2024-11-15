@@ -136,4 +136,14 @@ public class Controller {
             texto.setText("");
         }
     }
+    
+    public static void atualizarTutor(String nome, String endereco, String cpf, String celular) {
+        Tutor tutorAtualizado = new Tutor(tutorSelecionado.getId(), nome, endereco, cpf, celular);
+        TutorDAO.getInstance().update(tutorAtualizado);
+    }
+    
+    public static void atualizarVeterinario(String nome, String endereco, String cpf, String celular, String crmv) {
+        Veterinario veterinarioAtualizado = new Veterinario(veterinarioSelecionado.getId(), nome, endereco, cpf, celular, crmv);
+        VeterinarioDAO.getInstance().update(veterinarioAtualizado);
+    }
 }

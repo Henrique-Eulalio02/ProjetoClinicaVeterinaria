@@ -66,6 +66,7 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jRadioButton1 = new javax.swing.JRadioButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -186,6 +187,13 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Atualizar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -197,21 +205,23 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jRadioButton3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jRadioButton4)
+                                .addGap(18, 18, 18)
+                                .addComponent(jRadioButton1))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jButton4)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton5)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton6)
                                 .addGap(18, 18, 18)
+                                .addComponent(jButton1)
+                                .addGap(39, 39, 39)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jRadioButton3)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButton4)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButton1)))
+                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -229,7 +239,8 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jButton5)
                     .addComponent(jButton6)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -288,7 +299,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
         if (!Controller.jRadioButtonAnimaisSelecionados(jTable2)) {
-            JOptionPane.showMessageDialog(this, "Selecione um cliente.");
+            JOptionPane.showMessageDialog(this, "Selecione um tutor.");
         }
         // Controller.setTableModel(jTable2, new AnimalTableModel(AnimalDAO.getInstance().retrieveAll()));
     }//GEN-LAST:event_jRadioButton4ActionPerformed
@@ -416,6 +427,53 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if (jTable2.getModel() instanceof TutorTableModel) {
+            AtualizarTutor atualizarTutor = new AtualizarTutor();
+            
+            JDialog dialog = new JDialog(this, "Atualizar Tutor", true);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+           
+            dialog.getContentPane().add(atualizarTutor);
+
+          
+            dialog.setSize(400, 400);
+            dialog.setLocationRelativeTo(this); 
+
+            dialog.setVisible(true);
+        } else if (jTable2.getModel() instanceof VeterinarioTableModel) {
+            AtualizarVeterinario atualizarVeterinario = new AtualizarVeterinario();
+            
+            JDialog dialog = new JDialog(this, "Atualizar Veterinario", true);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+           
+            dialog.getContentPane().add(atualizarVeterinario);
+
+          
+            dialog.setSize(400, 500);
+            dialog.setLocationRelativeTo(this); 
+
+            dialog.setVisible(true);
+        } else if (jTable2.getModel() instanceof AnimalTableModel) {
+            AtualizarAnimal atualizarAnimal = new AtualizarAnimal();
+            
+            JDialog dialog = new JDialog(this, "Atualizar Animal", true);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+           
+            dialog.getContentPane().add(atualizarAnimal);
+
+          
+            dialog.setSize(600, 600);
+            dialog.setLocationRelativeTo(this); 
+
+            dialog.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -454,6 +512,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;

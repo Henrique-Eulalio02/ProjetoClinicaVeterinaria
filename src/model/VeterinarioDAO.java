@@ -101,7 +101,8 @@ public class VeterinarioDAO {
             stmt.setString(2, veterinario.getEndereco());
             stmt.setString(3, veterinario.getCpf());
             stmt.setString(4, veterinario.getCelular());
-            stmt.setInt(5, veterinario.getId());
+            stmt.setString(5, veterinario.getCrmv());
+            stmt.setInt(6, veterinario.getId());
             executeUpdate(stmt);
         } catch (SQLException e) {
             System.err.println("Exception: " + e.getMessage());

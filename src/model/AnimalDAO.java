@@ -98,6 +98,23 @@ public class AnimalDAO {
         return animaisPorDono;
     }
     
+    public String retriveTutorName(int tutorId) {
+        try {
+            PreparedStatement stmt = connect().prepareStatement("SELECT nome FROM tutor WHERE id = ?");
+            stmt.setInt(1, tutorId);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("nome");
+            } else {
+                return "Tutor não encontrado";
+            }
+        } catch (SQLException e) {
+            System.err.println("Exception: " + e.getMessage());
+            return "Erro ao buscar tutor";
+        }
+    }
+    
      // Updade
     public void update(Animal animal) {
         try {
