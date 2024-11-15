@@ -366,16 +366,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        if (jTable2.getModel() instanceof TutorTableModel) {
-            ((GenericTableModel) jTable2.getModel()).addListOfItems(Controller.getAllTutor());
-            jTextField4.setText("");
-        } else if (jTable2.getModel() instanceof VeterinarioTableModel) {
-            ((GenericTableModel) jTable2.getModel()).addListOfItems(Controller.getAllVeterinario());
-            jTextField4.setText("");
-        } else if (jTable2.getModel() instanceof AnimalTableModel) {
-            ((GenericTableModel) jTable2.getModel()).addListOfItems(Controller.getAllAnimal());
-            jTextField4.setText("");
-        }
+        Controller.controlaBotaoTodos(jTable2, jTextField4);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed

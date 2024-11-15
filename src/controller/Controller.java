@@ -79,6 +79,8 @@ public class Controller {
             ((GenericTableModel) table.getModel()).addListOfItems(TutorDAO.getInstance().retrieveBySimilarName(nome));
         } else if (table.getModel() instanceof VeterinarioTableModel) {
             ((GenericTableModel) table.getModel()).addListOfItems(VeterinarioDAO.getInstance().retrieveBySimilarName(nome));
+        } else if (table.getModel() instanceof AnimalTableModel) {
+            ((GenericTableModel) table.getModel()).addListOfItems(AnimalDAO.getInstance().retrieveBySimilarName(nome));
         }
     }
     
@@ -120,5 +122,18 @@ public class Controller {
     public static void removerAnimal(Animal animal) {
         AnimalDAO.getInstance().delete(animal);
         animalSelecionadoTextField.setText("");
+    }
+    
+    public static void controlaBotaoTodos(JTable table, JTextField texto) {
+        if (table.getModel() instanceof TutorTableModel) {
+            ((GenericTableModel) table.getModel()).addListOfItems(Controller.getAllTutor());
+            texto.setText("");
+        } else if (table.getModel() instanceof VeterinarioTableModel) {
+            ((GenericTableModel) table.getModel()).addListOfItems(Controller.getAllVeterinario());
+            texto.setText("");
+        } else if (table.getModel() instanceof AnimalTableModel) {
+            ((GenericTableModel) table.getModel()).addListOfItems(Controller.getAllAnimal());
+            texto.setText("");
+        }
     }
 }
