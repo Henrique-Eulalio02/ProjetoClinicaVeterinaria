@@ -90,4 +90,8 @@ public class Animal {
         this.veterinarioId = veterinarioId;
     }
 
+    @Override
+    public String toString() {
+        return nome; //
+    }
 }  

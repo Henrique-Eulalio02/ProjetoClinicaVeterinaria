@@ -146,4 +146,9 @@ public class Controller {
         Veterinario veterinarioAtualizado = new Veterinario(veterinarioSelecionado.getId(), nome, endereco, cpf, celular, crmv);
         VeterinarioDAO.getInstance().update(veterinarioAtualizado);
     }
+    
+    public static void atualizarAnimal(String nome, String especie, String raca, int idade, String sexo, int tutorId, int veterinarioId) {
+        Animal animalAtualizado = new Animal(animalSelecionado.getId(), nome, especie, raca, idade, sexo, tutorId, veterinarioId);
+        AnimalDAO.getInstance().update(animalAtualizado);
+    }
 }

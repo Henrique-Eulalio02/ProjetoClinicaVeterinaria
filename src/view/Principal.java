@@ -467,7 +467,7 @@ public class Principal extends javax.swing.JFrame {
             dialog.getContentPane().add(atualizarAnimal);
 
           
-            dialog.setSize(600, 600);
+            dialog.setSize(600, 450);
             dialog.setLocationRelativeTo(this); 
 
             dialog.setVisible(true);

@@ -69,4 +69,9 @@ public class Veterinario {
     public void setCrmv(String crmv) {
         this.crmv = crmv;
     }
+    
+    @Override
+    public String toString() {
+        return nome;
+    }
 }
