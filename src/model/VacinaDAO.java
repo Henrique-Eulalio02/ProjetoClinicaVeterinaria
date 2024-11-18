@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 import static model.DAO.connect;
 import static model.DAO.createTable;
 import static model.DAO.executeUpdate;
-import static model.DAO.getResultSet;
+import static model.DAO.getResultSet;   
 import static model.DAO.lastId;
 
 public class VacinaDAO {
@@ -30,11 +30,11 @@ public class VacinaDAO {
     public Vacina create(String nome, String descricao, String marca, int quantidadeEstoque) {
         try {
             PreparedStatement stmt;
-            stmt = DAO.connect().prepareStatement("INSERT INTO veterinario (nome, descricao, marca, quantidadeEstoque) VALUES (?,?,?,?)");
+            stmt = DAO.connect().prepareStatement("INSERT INTO vacina (nome, descricao, marca, quantidadeEstoque) VALUES (?,?,?,?)");
             stmt.setString(1, nome);
             stmt.setString(2, descricao);
             stmt.setString(3, marca);
-            stmt.setInt(1, quantidadeEstoque);
+            stmt.setInt(4, quantidadeEstoque);
             executeUpdate(stmt);
         } catch (SQLException ex) {
             Logger.getLogger(VacinaDAO.class.getName()).log(Level.SEVERE, null, ex);

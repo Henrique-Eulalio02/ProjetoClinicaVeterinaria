@@ -160,7 +160,8 @@ public abstract class DAO {
                     +    "animalId INT, \n"
                     +    "veterinarioId INT, \n"
                     +    "vacinaId INT, \n"
-                    +    "dataProximaDose TIMESTAMP, \n"
+                    +    "dataProximaDose TIMESTAMP NULL DEFAULT NULL, \n"
+                    +    "data TIMESTAMP DEFAULT CURRENT_TIMESTAMP, \n"
                     +    "FOREIGN KEY (vacinaId) REFERENCES vacina(id), \n"
                     +    "FOREIGN KEY (animalId) REFERENCES animal(id), \n"
                     +    "FOREIGN KEY (veterinarioId) REFERENCES veterinario(id) \n"
@@ -188,7 +189,6 @@ public abstract class DAO {
                     +   "tipoExame VARCHAR(100), \n"
                     +   "resultados TEXT, \n"
                     +   "data TIMESTAMP, \n"
-                    +   "servicoId INT, \n"
                     +   "FOREIGN KEY (animalId) REFERENCES animal(id), \n"
                     +   "FOREIGN KEY (veterinarioId) REFERENCES veterinario(id) \n"
                     +   ");");

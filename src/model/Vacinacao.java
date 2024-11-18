@@ -8,12 +8,14 @@ public class Vacinacao {
     private int veterinarioId;
     private int vacinaId;
     private Timestamp dataProximaDose;
+    private Timestamp data;
 
-    public Vacinacao(int id, int animalId, int veterinarioId, int vacinaId, Timestamp dataProximaDose) {
+    public Vacinacao(int id, int animalId, int veterinarioId, int vacinaId, Timestamp data, Timestamp dataProximaDose) {
         this.id = id;
         this.animalId = animalId;
         this.veterinarioId = veterinarioId;
         this.vacinaId = vacinaId;
+        this.data = data;
         this.dataProximaDose = dataProximaDose;
     }
 
@@ -36,7 +38,7 @@ public class Vacinacao {
         this.dataProximaDose = dataProximaDose;
     }
     
-        public int getAnimalId() {
+    public int getAnimalId() {
         return animalId;
     }
 
@@ -50,5 +52,13 @@ public class Vacinacao {
 
     public void setVeterinarioId(int veterinarioId) {
         this.veterinarioId = veterinarioId;
+    }
+    
+    public Timestamp getData() {
+        return data;
+    }
+
+    public void setData(Timestamp data) {
+        this.data = data;
     }
 }

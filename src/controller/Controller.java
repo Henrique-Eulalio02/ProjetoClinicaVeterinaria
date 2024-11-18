@@ -1,27 +1,42 @@
 package controller;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import model.Animal;
 import model.AnimalDAO;
+import model.Castracao;
+import model.CastracaoDAO;
 import model.ConsultaGeral;
 import model.ConsultaGeralDAO;
+import model.Exame;
+import model.ExameDAO;
 import model.Tutor;
 import model.TutorDAO;
+import model.Vacina;
+import model.VacinaDAO;
+import model.Vacinacao;
+import model.VacinacaoDAO;
 import model.Veterinario;
 import model.VeterinarioDAO;
 import view.AnimalTableModel;
+import view.CastracaoTableModel;
 import view.ConsultaTableModel;
+import view.ExameTableModel;
 import view.GenericTableModel;
 import view.TutorTableModel;
+import view.VacinacaoTableModel;
 import view.VeterinarioTableModel;
 
 public class Controller {
     private static Tutor tutorSelecionado = null;
     private static Animal animalSelecionado = null;
     private static ConsultaGeral consultaSelecionada = null;
+    private static Castracao castracaoSelecionada = null;
+    private static Exame exameSelecionado = null;
+    private static Vacinacao vacinacaoSelecionada = null;
     private static Veterinario veterinarioSelecionado = null;
     private static JTextField tutorSelecionadoTextField = null;
     private static JTextField animalSelecionadoTextField = null;
@@ -51,6 +66,18 @@ public class Controller {
         return consultaSelecionada;
     }
     
+    public static Castracao getCastracaoSelecionada() {
+        return castracaoSelecionada;
+    }
+    
+    public static Exame getExameSelecionado() {
+        return exameSelecionado;
+    }
+    
+    public static Vacinacao getVacinacaoSelecionada() {
+        return vacinacaoSelecionada;
+    }
+    
     public static void setSelected(Object selected) {
         if (selected instanceof Tutor) {
             tutorSelecionado = (Tutor) selected;
@@ -63,6 +90,12 @@ public class Controller {
             veterinarioSelecionado = (Veterinario) selected;
         } else if (selected instanceof ConsultaGeral) {
             consultaSelecionada = (ConsultaGeral) selected;
+        } else if (selected instanceof Castracao) {
+            castracaoSelecionada = (Castracao) selected;
+        } else if (selected instanceof Exame) {
+            exameSelecionado = (Exame) selected;
+        } else if (selected instanceof Vacinacao) {
+            vacinacaoSelecionada = (Vacinacao) selected;
         }
     }
     
@@ -93,6 +126,10 @@ public class Controller {
             ((GenericTableModel) table.getModel()).addListOfItems(AnimalDAO.getInstance().retrieveBySimilarName(nome));
         } else if (table.getModel() instanceof ConsultaTableModel) {
             ((GenericTableModel) table.getModel()).addListOfItems(ConsultaGeralDAO.getInstance().retrieveByDiagnostico(nome));
+        } else if (table.getModel() instanceof CastracaoTableModel) {
+            ((GenericTableModel) table.getModel()).addListOfItems(CastracaoDAO.getInstance().retrieveByTipoCastracaoName(nome));
+        } else if (table.getModel() instanceof ExameTableModel) {
+            ((GenericTableModel) table.getModel()).addListOfItems(ExameDAO.getInstance().retrieveByTipoExame(nome));
         }
     }
     
@@ -112,6 +149,18 @@ public class Controller {
         return ConsultaGeralDAO.getInstance().retrieveAll();
     }
     
+    public static List<Object> getAllCastracao() {
+        return CastracaoDAO.getInstance().retrieveAll();
+    }
+    
+    public static List<Object> getAllExame() {
+        return ExameDAO.getInstance().retrieveAll();
+    }
+    
+    public static List<Object> getAllVacinacao() {
+        return VacinacaoDAO.getInstance().retrieveAll();
+    }
+    
     public static Tutor adicionarTutor(String nome, String endereco, String cpf, String celular) {
         Tutor novoTutor = TutorDAO.getInstance().create(nome, endereco, cpf, celular);
         return novoTutor;
@@ -126,8 +175,24 @@ public class Controller {
         return novoVeterinario;
     }
     
-    public static ConsultaGeral adicionarConsulta(String motivo, String diagnostico, int tutorId, int veterinarioId) {
-        return ConsultaGeralDAO.getInstance().create(tutorId, veterinarioId, motivo, diagnostico);
+    public static ConsultaGeral adicionarConsulta(String motivo, String diagnostico, int animalId, int veterinarioId) {
+        return ConsultaGeralDAO.getInstance().create(animalId, veterinarioId, motivo, diagnostico);
+    }
+    
+    public static Castracao adicionarCastracao(String tipoCastracao, int idade, double peso, int animalId, int veterinarioId) {
+        return CastracaoDAO.getInstance().create(animalId, veterinarioId, tipoCastracao, idade, peso);
+    }
+    
+    public static Exame adicionarExame(String tipoExame, String resultados, int animalId, int veterinarioId, Timestamp data) {
+        return ExameDAO.getInstance().create(animalId, veterinarioId, tipoExame, resultados, data);
+    }
+    
+    public static Vacina adicionarVacina(String nome, String descricao, String marca, int quantidadeEstoque) {
+        return VacinaDAO.getInstance().create(nome, descricao, marca, quantidadeEstoque);
+    }
+    
+    public static Vacinacao adicionarVacinacao(int animalId, int veterinarioId, int vacinaId, Timestamp data, Timestamp nextData) {
+        return VacinacaoDAO.getInstance().create(animalId, veterinarioId, vacinaId, data, nextData);
     }
     
     public static void removerTutor(Tutor tutor) {
@@ -148,6 +213,18 @@ public class Controller {
         ConsultaGeralDAO.getInstance().delete(consulta);
     }
     
+    public static void removerCastracao(Castracao castracao) {
+        CastracaoDAO.getInstance().delete(castracao);
+    }
+    
+    public static void removerExame(Exame exame) {
+        ExameDAO.getInstance().delete(exame);
+    }
+    
+    public static void removerVacinacao(Vacinacao vacinacao) {
+        VacinacaoDAO.getInstance().delete(vacinacao);
+    }
+    
     public static void controlaBotaoTodos(JTable table, JTextField texto) {
         if (table.getModel() instanceof TutorTableModel) {
             ((GenericTableModel) table.getModel()).addListOfItems(Controller.getAllTutor());
@@ -160,6 +237,12 @@ public class Controller {
             texto.setText("");
         } else if (table.getModel() instanceof ConsultaTableModel) {
             ((GenericTableModel) table.getModel()).addListOfItems(Controller.getAllConsulta());
+        } else if (table.getModel() instanceof CastracaoTableModel) {
+            ((GenericTableModel) table.getModel()).addListOfItems(Controller.getAllCastracao());
+        } else if (table.getModel() instanceof ExameTableModel) {
+            ((GenericTableModel) table.getModel()).addListOfItems(Controller.getAllExame());
+        } else if (table.getModel() instanceof VacinacaoTableModel) {
+            ((GenericTableModel) table.getModel()).addListOfItems(Controller.getAllVacinacao());
         }
     }
     

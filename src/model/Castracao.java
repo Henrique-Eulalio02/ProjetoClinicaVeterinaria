@@ -54,4 +54,16 @@ public class Castracao {
     public void setVeterinarioId(int veterinarioId) {
         this.veterinarioId = veterinarioId;
     }
+    
+    public void setTipoCastracao(String tipoCastracao) {
+        this.tipoCastracao = tipoCastracao;
+    }
+
+    public void setIdadeAnimalNaCastracao(int idadeAnimalNaCastracao) {
+        this.idadeAnimalNaCastracao = idadeAnimalNaCastracao;
+    }
+
+    public void setPesoAnimalNaCastracao(double pesoAnimalNaCastracao) {
+        this.pesoAnimalNaCastracao = pesoAnimalNaCastracao;
+    }
 }
