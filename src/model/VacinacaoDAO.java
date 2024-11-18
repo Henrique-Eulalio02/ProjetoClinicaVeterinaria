@@ -28,15 +28,16 @@ public class VacinacaoDAO {
     }
     
     // Create
-    public Vacinacao create(int servicoId, Vacina vacina, Timestamp dataProximaDose) {
+    public Vacinacao create(int animalId, int veterinarioId, Vacina vacina, Timestamp dataProximaDose) {
         try {
             int vacinaId = vacina.getId();
             
             PreparedStatement stmt;
-            stmt = DAO.connect().prepareStatement("INSERT INTO vacinacao (servicoId, vacinaId, dataProximaDose) VALUES (?,?,?)");
-            stmt.setInt(1, servicoId);
-            stmt.setInt(2, vacinaId);
-            stmt.setTimestamp(3, dataProximaDose);
+            stmt = DAO.connect().prepareStatement("INSERT INTO vacinacao (animalId, veterinarioId, vacinaId, dataProximaDose) VALUES (?,?,?,?)");
+            stmt.setInt(1, animalId);
+            stmt.setInt(2, veterinarioId);
+            stmt.setInt(3, vacinaId);
+            stmt.setTimestamp(4, dataProximaDose);
             executeUpdate(stmt);
         } catch (SQLException ex) {
             Logger.getLogger(VacinacaoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -48,7 +49,7 @@ public class VacinacaoDAO {
     private Vacinacao buildObject(ResultSet rs) {
         Vacinacao vacinacao = null;
         try {
-            vacinacao = new Vacinacao(rs.getInt("id"), rs.getInt("servicoId"), rs.getInt("vacinaId"), rs.getTimestamp("dataProximaDose"));
+            vacinacao = new Vacinacao(rs.getInt("id"), rs.getInt("animalId"), rs.getInt("veterinarioId"), rs.getInt("vacinaId"), rs.getTimestamp("dataProximaDose"));
         } catch (SQLException e) {
             System.err.println("Exception: " + e.getMessage());
         }
@@ -96,11 +97,12 @@ public class VacinacaoDAO {
     public void update(Vacinacao vacinacao) {
         try {
             PreparedStatement stmt;
-            stmt = connect().prepareStatement("UPDATE vacinacao SET servicoId=?, vacinaId=?, dataProximaDose=? WHERE id=?");
-            stmt.setInt(1, vacinacao.getServicoId());
-            stmt.setInt(2, vacinacao.getVacinaId());
-            stmt.setTimestamp(3, vacinacao.getDataProximaDose());
-            stmt.setInt(4, vacinacao.getId());
+            stmt = connect().prepareStatement("UPDATE vacinacao SET animalId=?, veterinarioId=?, vacinaId=?, dataProximaDose=? WHERE id=?");
+            stmt.setInt(1, vacinacao.getAnimalId());
+            stmt.setInt(2, vacinacao.getVeterinarioId());
+            stmt.setInt(3, vacinacao.getVacinaId());
+            stmt.setTimestamp(4, vacinacao.getDataProximaDose());
+            stmt.setInt(5, vacinacao.getId());
             executeUpdate(stmt);
         } catch (SQLException e) {
             System.err.println("Exception: " + e.getMessage());

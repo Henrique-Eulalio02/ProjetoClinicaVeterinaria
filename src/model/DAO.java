@@ -142,48 +142,41 @@ public abstract class DAO {
                     +  ");");
             executeUpdate(stm);
 
-            // Tabela servico
-            stm = DAO.connect().prepareStatement("CREATE TABLE IF NOT EXISTS servico ( \n"
-                    +  "id INT AUTO_INCREMENT PRIMARY KEY, \n"
-                    +  "animalId INT, \n"
-                    +  "veterinarioId INT, \n"
-                    +  "data TIMESTAMP, \n"
-                    +  "valor DECIMAL(5, 2), \n"
-                    +  "gasto DECIMAL(5, 2), \n"
-                    +  "FOREIGN KEY (veterinarioId) REFERENCES veterinario(id), \n"
-                    +  "FOREIGN KEY (animalId) REFERENCES animal(id) \n"
-                    +  ");");
-            executeUpdate(stm);
-
             // Tabela consulta
             stm = DAO.connect().prepareStatement("CREATE TABLE IF NOT EXISTS consulta ( \n"
                     +    "id INT AUTO_INCREMENT PRIMARY KEY, \n"
-                    +    "servicoId INT, \n"
+                    +    "animalId INT, \n"
+                    +    "veterinarioId INT, \n"
                     +    "motivo VARCHAR(255), \n"
                     +    "diagnostico VARCHAR(255), \n"
-                    +    "FOREIGN KEY (servicoId) REFERENCES servico(id) \n"
+                    +    "FOREIGN KEY (animalId) REFERENCES animal(id), \n"
+                    +    "FOREIGN KEY (veterinarioId) REFERENCES veterinario(id) \n"
                     +    ");");
             executeUpdate(stm);
 
             // Tabela vacinacao
             stm = DAO.connect().prepareStatement("CREATE TABLE IF NOT EXISTS vacinacao ( \n"
                     +    "id INT AUTO_INCREMENT PRIMARY KEY, \n"
-                    +    "servicoId INT, \n"
+                    +    "animalId INT, \n"
+                    +    "veterinarioId INT, \n"
                     +    "vacinaId INT, \n"
                     +    "dataProximaDose TIMESTAMP, \n"
                     +    "FOREIGN KEY (vacinaId) REFERENCES vacina(id), \n"
-                    +    "FOREIGN KEY (servicoId) REFERENCES servico(id) \n"
+                    +    "FOREIGN KEY (animalId) REFERENCES animal(id), \n"
+                    +    "FOREIGN KEY (veterinarioId) REFERENCES veterinario(id) \n"
                     +    ");");
             executeUpdate(stm);
 
             // Tabela castracoes
             stm = DAO.connect().prepareStatement("CREATE TABLE IF NOT EXISTS castracoes ( \n"
                     +   "id INT AUTO_INCREMENT PRIMARY KEY, \n"
-                    +   "servicoId INT, \n"
+                    +   "animalId INT, \n"
+                    +   "veterinarioId INT, \n"
                     +   "tipoCastracao VARCHAR(100), \n"
                     +   "idadeAnimalNaCastracao INT, \n"
                     +   "pesoAnimalNaCastracao FLOAT, \n"
-                    +   "FOREIGN KEY (servicoId) REFERENCES servico(id) \n"
+                    +   "FOREIGN KEY (animalId) REFERENCES animal(id), \n"
+                    +   "FOREIGN KEY (veterinarioId) REFERENCES veterinario(id) \n"
                     +   ");");
             executeUpdate(stm);
 
@@ -191,11 +184,13 @@ public abstract class DAO {
             stm = DAO.connect().prepareStatement("CREATE TABLE IF NOT EXISTS exame ( \n"
                     +   "id INT AUTO_INCREMENT PRIMARY KEY, \n"
                     +   "animalId INT, \n"
+                    +   "veterinarioId INT, \n"
                     +   "tipoExame VARCHAR(100), \n"
                     +   "resultados TEXT, \n"
                     +   "data TIMESTAMP, \n"
                     +   "servicoId INT, \n"
-                    +   "FOREIGN KEY (servicoId) REFERENCES servico(id) \n"
+                    +   "FOREIGN KEY (animalId) REFERENCES animal(id), \n"
+                    +   "FOREIGN KEY (veterinarioId) REFERENCES veterinario(id) \n"
                     +   ");");
             executeUpdate(stm);
 

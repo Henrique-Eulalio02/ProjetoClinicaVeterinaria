@@ -27,14 +27,15 @@ public class CastracaoDAO {
     }
     
     // Create
-    public Castracao create(int servicoId, String tipoCastracao, int idadeAnimalNaCastracao, double pesoAnimalNaCastracao) {
+    public Castracao create(int animalId, int veterinarioId, String tipoCastracao, int idadeAnimalNaCastracao, double pesoAnimalNaCastracao) {
         try {          
             PreparedStatement stmt;
-            stmt = DAO.connect().prepareStatement("INSERT INTO castracao (servicoId, tipoCastracao, idadeAnimalNaCastracao, pesoAnimalNaCastracao) VALUES (?,?,?,?)");
-            stmt.setInt(1, servicoId);
-            stmt.setString(2, tipoCastracao);
-            stmt.setInt(3, idadeAnimalNaCastracao);
-            stmt.setDouble(4, pesoAnimalNaCastracao);
+            stmt = DAO.connect().prepareStatement("INSERT INTO castracao (animalId, veterinarioId, tipoCastracao, idadeAnimalNaCastracao, pesoAnimalNaCastracao) VALUES (?,?,?,?,?)");
+            stmt.setInt(1, animalId);
+            stmt.setInt(2, veterinarioId);
+            stmt.setString(3, tipoCastracao);
+            stmt.setInt(4, idadeAnimalNaCastracao);
+            stmt.setDouble(5, pesoAnimalNaCastracao);
             executeUpdate(stmt);
         } catch (SQLException ex) {
             Logger.getLogger(CastracaoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -46,7 +47,7 @@ public class CastracaoDAO {
     private Castracao buildObject(ResultSet rs) {
         Castracao castracao = null;
         try {
-            castracao = new Castracao(rs.getInt("id"), rs.getInt("servicoId"), rs.getString("tipoCastracao"), rs.getInt("idadeAnimalNaCastracao"), rs.getDouble("pesoAnimalNaCastracao"));
+            castracao = new Castracao(rs.getInt("id"), rs.getInt("animalId"), rs.getInt("veterinarioId"), rs.getString("tipoCastracao"), rs.getInt("idadeAnimalNaCastracao"), rs.getDouble("pesoAnimalNaCastracao"));
         } catch (SQLException e) {
             System.err.println("Exception: " + e.getMessage());
         }
@@ -94,12 +95,13 @@ public class CastracaoDAO {
     public void update(Castracao castracao) {
         try {
             PreparedStatement stmt;
-            stmt = connect().prepareStatement("UPDATE consulta SET servicoId=?, tipoCastracao=?, idadeAnimalNaCastracao=?, pesoAnimalNaCastracao=? WHERE id=?");
-            stmt.setInt(1, castracao.getServicoId());
-            stmt.setString(2, castracao.getTipoCastracao());
-            stmt.setInt(3, castracao.getIdadeAnimalNaCastracao());
-            stmt.setDouble(4, castracao.getPesoAnimalNaCastracao());
-            stmt.setInt(5, castracao.getId());
+            stmt = connect().prepareStatement("UPDATE consulta SET animalId=?, veterinarioId=?, tipoCastracao=?, idadeAnimalNaCastracao=?, pesoAnimalNaCastracao=? WHERE id=?");
+            stmt.setInt(1, castracao.getAnimalId());
+            stmt.setInt(2, castracao.getVeterinarioId());
+            stmt.setString(3, castracao.getTipoCastracao());
+            stmt.setInt(4, castracao.getIdadeAnimalNaCastracao());
+            stmt.setDouble(5, castracao.getPesoAnimalNaCastracao());
+            stmt.setInt(6, castracao.getId());
             executeUpdate(stmt);
         } catch (SQLException e) {
             System.err.println("Exception: " + e.getMessage());

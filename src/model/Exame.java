@@ -3,15 +3,17 @@ package model;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 
-public class Exame extends Servico {
+public class Exame {
     private int id;
-    private int servicoId;
+    private int animalId;
+    private int veterinarioId;
     private String tipoExame;
     private String resultados;
 
-    public Exame(int id, int servicoId, String tipoExame, String resultados) {
+    public Exame(int id, int animalId, int veterinarioId, String tipoExame, String resultados) {
         this.id = id;
-        this.servicoId = servicoId;
+        this.animalId = animalId;
+        this.veterinarioId = veterinarioId;
         this.tipoExame = tipoExame;
         this.resultados = resultados;
     }
@@ -21,10 +23,6 @@ public class Exame extends Servico {
     
     public int getId() {
         return id;
-    }
-    
-    public int getServicoId() {
-        return servicoId;
     }
 
     public String getTipoExame() {
@@ -37,5 +35,21 @@ public class Exame extends Servico {
 
     public void setResultados(String resultados) {
         this.resultados = resultados;
+    }
+    
+     public int getAnimalId() {
+        return animalId;
+    }
+
+    public void setAnimalId(int animalId) {
+        this.animalId = animalId;
+    }
+
+    public int getVeterinarioId() {
+        return veterinarioId;
+    }
+
+    public void setVeterinarioId(int veterinarioId) {
+        this.veterinarioId = veterinarioId;
     }
 }

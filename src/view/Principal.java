@@ -6,10 +6,17 @@
 package view;
 
 import controller.Controller;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import model.ConsultaGeral;
+import model.ConsultaGeralDAO;
 import model.TutorDAO;
 
 /**
@@ -24,8 +31,8 @@ public class Principal extends javax.swing.JFrame {
         buttonGroup1.add(jRadioButton1);
         jTextField1.setText("");
         jTextField2.setText("");
+        jTextField3.setText("");
         jTextField4.setText("");
-        Controller.setTableModel(jTable2, new TutorTableModel(TutorDAO.getInstance().retrieveAll()));
         jRadioButton3.setSelected(true);
         Controller.setTextFields(jTextField1, jTextField2);
     }
@@ -36,6 +43,26 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         this.myInitComponents();
+        
+        jTabbedPane2.addChangeListener(e -> {
+        int selectedIndex = jTabbedPane2.getSelectedIndex();
+
+        if (selectedIndex == 0) { // Aba de Cadastros
+            Controller.setTableModel(jTable2, new TutorTableModel(TutorDAO.getInstance().retrieveAll()));
+        } else if (selectedIndex == 1) { // Aba de Consultas
+            carregarConsultasAnimalEspecifico();
+        }
+    });
+        
+        Controller.setTableModel(jTable2, new TutorTableModel(TutorDAO.getInstance().retrieveAll()));
+    }
+    
+    private void carregarConsultasAnimalEspecifico() {
+        if (Controller.getAnimalSelecionado() != null) {
+            Controller.setTableModel(jTable1, new ConsultaTableModel(ConsultaGeralDAO.getInstance().retrieveBySelectedAnimal()));
+        } else {
+            Controller.setTableModel(jTable1, new ConsultaTableModel(new ArrayList()));
+        }
     }
 
     /**
@@ -67,6 +94,15 @@ public class Principal extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         jRadioButton1 = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -248,6 +284,101 @@ public class Principal extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Cadastros", jPanel3);
 
+        jButton2.setText("Todos");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Novo");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton7.setText("Apagar");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jButton8.setText("Atualizar");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Buscar:");
+
+        jTextField3.setText("jTextField3");
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField3KeyTyped(evt);
+            }
+        });
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTable1MousePressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton7)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton8)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField3)))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3)
+                    .addComponent(jButton7)
+                    .addComponent(jButton8)
+                    .addComponent(jLabel3)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane2.addTab("Consultas", jPanel4);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -297,6 +428,153 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if (jTable2.getModel() instanceof TutorTableModel) {
+            AtualizarTutor atualizarTutor = new AtualizarTutor();
+
+            JDialog dialog = new JDialog(this, "Atualizar Tutor", true);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+            dialog.getContentPane().add(atualizarTutor);
+
+            dialog.setSize(400, 400);
+            dialog.setLocationRelativeTo(this);
+
+            dialog.setVisible(true);
+        } else if (jTable2.getModel() instanceof VeterinarioTableModel) {
+            AtualizarVeterinario atualizarVeterinario = new AtualizarVeterinario();
+
+            JDialog dialog = new JDialog(this, "Atualizar Veterinario", true);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+            dialog.getContentPane().add(atualizarVeterinario);
+
+            dialog.setSize(400, 500);
+            dialog.setLocationRelativeTo(this);
+
+            dialog.setVisible(true);
+        } else if (jTable2.getModel() instanceof AnimalTableModel) {
+            AtualizarAnimal atualizarAnimal = new AtualizarAnimal();
+
+            JDialog dialog = new JDialog(this, "Atualizar Animal", true);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+            dialog.getContentPane().add(atualizarAnimal);
+
+            dialog.setSize(600, 450);
+            dialog.setLocationRelativeTo(this);
+
+            dialog.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        // TODO add your handling code here:
+        Controller.jRadioButtonVeterinariosSelecionados(jTable2);
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void jTable2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MousePressed
+        // TODO add your handling code here:
+        Controller.setSelected(((GenericTableModel)jTable2.getModel()).getItem(jTable2.getSelectedRow()));
+    }//GEN-LAST:event_jTable2MousePressed
+
+    private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
+        // TODO add your handling code here:
+        Controller.atualizaBuscaPorNomeSimiliar(jTable2, jTextField4.getText());
+    }//GEN-LAST:event_jTextField4KeyTyped
+ 
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        if (jTable2.getModel() instanceof TutorTableModel) {
+            RemoverTutor removerTutor = new RemoverTutor();
+
+            JDialog dialog = new JDialog(this, "Remover Tutor", true);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+            dialog.getContentPane().add(removerTutor);
+
+            dialog.setSize(400, 280);
+            dialog.setLocationRelativeTo(this);
+
+            dialog.setVisible(true);
+        } else if (jTable2.getModel() instanceof VeterinarioTableModel) {
+            RemoverVeterinario removerVeterinario = new RemoverVeterinario();
+
+            JDialog dialog = new JDialog(this, "Remover Veterinario", true);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+            dialog.getContentPane().add(removerVeterinario);
+
+            dialog.setSize(400, 280);
+            dialog.setLocationRelativeTo(this);
+
+            dialog.setVisible(true);
+        } else if (jTable2.getModel() instanceof AnimalTableModel) {
+            RemoverAnimal removerAnimal = new RemoverAnimal();
+
+            JDialog dialog = new JDialog(this, "Remover Animal", true);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+            dialog.getContentPane().add(removerAnimal);
+
+            dialog.setSize(400, 280);
+            dialog.setLocationRelativeTo(this);
+
+            dialog.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        if (jTable2.getModel() instanceof TutorTableModel) {
+            AdicionarTutor adicionarTutorPanel = new AdicionarTutor();
+
+            JDialog dialog = new JDialog(this, "Adicionar Tutor", true);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+            dialog.getContentPane().add(adicionarTutorPanel);
+
+            dialog.setSize(400, 400);
+            dialog.setLocationRelativeTo(this);
+
+            dialog.setVisible(true);
+        } else if (jTable2.getModel() instanceof VeterinarioTableModel) {
+            AdicionarVeterinario adicionarVeterinarioPanel = new AdicionarVeterinario();
+
+            JDialog dialog = new JDialog(this, "Adicionar Veterinario", true);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+            dialog.getContentPane().add(adicionarVeterinarioPanel);
+
+            dialog.setSize(400, 450);
+            dialog.setLocationRelativeTo(this);
+
+            dialog.setVisible(true);
+        } else if (jTable2.getModel() instanceof AnimalTableModel) {
+            AdicionarAnimal adicionarAnimalPanel = new AdicionarAnimal();
+
+            JDialog dialog = new JDialog(this, "Adicionar Animal", true);
+            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+            dialog.getContentPane().add(adicionarAnimalPanel);
+
+            dialog.setSize(400, 450);
+            dialog.setLocationRelativeTo(this);
+
+            dialog.setVisible(true);
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        Controller.controlaBotaoTodos(jTable2, jTextField4);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
         if (!Controller.jRadioButtonAnimaisSelecionados(jTable2)) {
             JOptionPane.showMessageDialog(this, "Selecione um tutor.");
@@ -309,170 +587,65 @@ public class Principal extends javax.swing.JFrame {
         // Controller.setTableModel(jTable2, new PessoaTableModel(PessoaDAO.getInstance().retrieveAll()));
     }//GEN-LAST:event_jRadioButton3ActionPerformed
 
-    private void jTable2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MousePressed
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        Controller.setSelected(((GenericTableModel)jTable2.getModel()).getItem(jTable2.getSelectedRow()));
-    }//GEN-LAST:event_jTable2MousePressed
+        RemoverConsulta removerConsultaPanel = new RemoverConsulta();
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        JDialog dialog = new JDialog(this, "Remover Consulta", true);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+        dialog.getContentPane().add(removerConsultaPanel);
+
+        dialog.setSize(400, 350);
+        dialog.setLocationRelativeTo(this);
+
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jTextField3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyTyped
         // TODO add your handling code here:
-        Controller.jRadioButtonVeterinariosSelecionados(jTable2);
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+        Controller.atualizaBuscaPorNomeSimiliar(jTable1, jTextField3.getText());
+    }//GEN-LAST:event_jTextField3KeyTyped
 
-    private void jTextField4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyTyped
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-       Controller.atualizaBuscaPorNomeSimiliar(jTable2, jTextField4.getText());
-    }//GEN-LAST:event_jTextField4KeyTyped
+        Controller.controlaBotaoTodos(jTable1, jTextField3);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+        AdicionarConsulta adicionarConsultaPanel = new AdicionarConsulta();
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        JDialog dialog = new JDialog(this, "Adicionar Consulta", true);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+
+        dialog.getContentPane().add(adicionarConsultaPanel);
+
+        dialog.setSize(500, 450);
+        dialog.setLocationRelativeTo(this);
+
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
         // TODO add your handling code here:
-        if (jTable2.getModel() instanceof TutorTableModel) {
-            AdicionarTutor adicionarTutorPanel = new AdicionarTutor();
-          
-            JDialog dialog = new JDialog(this, "Adicionar Tutor", true);
-            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        Controller.setSelected(((GenericTableModel)jTable1.getModel()).getItem(jTable1.getSelectedRow()));
+    }//GEN-LAST:event_jTable1MousePressed
 
-           
-            dialog.getContentPane().add(adicionarTutorPanel);
-
-          
-            dialog.setSize(400, 400);
-            dialog.setLocationRelativeTo(this); 
-
-            dialog.setVisible(true);
-        } else if (jTable2.getModel() instanceof VeterinarioTableModel) {
-            AdicionarVeterinario adicionarVeterinarioPanel = new AdicionarVeterinario();
-            
-            JDialog dialog = new JDialog(this, "Adicionar Veterinario", true);
-            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-
-           
-            dialog.getContentPane().add(adicionarVeterinarioPanel);
-
-          
-            dialog.setSize(400, 450);
-            dialog.setLocationRelativeTo(this); 
-
-            dialog.setVisible(true);
-        } else if (jTable2.getModel() instanceof AnimalTableModel) {
-            AdicionarAnimal adicionarAnimalPanel = new AdicionarAnimal();
-            
-            JDialog dialog = new JDialog(this, "Adicionar Animal", true);
-            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-
-           
-            dialog.getContentPane().add(adicionarAnimalPanel);
-
-          
-            dialog.setSize(400, 450);
-            dialog.setLocationRelativeTo(this); 
-
-            dialog.setVisible(true);
-        }
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-        Controller.controlaBotaoTodos(jTable2, jTextField4);
-    }//GEN-LAST:event_jButton4ActionPerformed
+        AtualizarConsulta atualizarConsultaPanel = new AtualizarConsulta();
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-        if (jTable2.getModel() instanceof TutorTableModel) {
-            RemoverTutor removerTutor = new RemoverTutor();
-            
-            JDialog dialog = new JDialog(this, "Remover Tutor", true);
-            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        JDialog dialog = new JDialog(this, "Atualizar Consulta", true);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
-           
-            dialog.getContentPane().add(removerTutor);
+        dialog.getContentPane().add(atualizarConsultaPanel);
 
-          
-            dialog.setSize(400, 280);
-            dialog.setLocationRelativeTo(this); 
+        dialog.setSize(500, 450);
+        dialog.setLocationRelativeTo(this);
 
-            dialog.setVisible(true);
-        } else if (jTable2.getModel() instanceof VeterinarioTableModel) {
-            RemoverVeterinario removerVeterinario = new RemoverVeterinario();
-            
-            JDialog dialog = new JDialog(this, "Remover Veterinario", true);
-            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-
-           
-            dialog.getContentPane().add(removerVeterinario);
-
-          
-            dialog.setSize(400, 280);
-            dialog.setLocationRelativeTo(this); 
-
-            dialog.setVisible(true);
-        } else if (jTable2.getModel() instanceof AnimalTableModel) {
-            RemoverAnimal removerAnimal = new RemoverAnimal();
-            
-            JDialog dialog = new JDialog(this, "Remover Animal", true);
-            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-
-           
-            dialog.getContentPane().add(removerAnimal);
-
-          
-            dialog.setSize(400, 280);
-            dialog.setLocationRelativeTo(this); 
-
-            dialog.setVisible(true);
-        }
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        if (jTable2.getModel() instanceof TutorTableModel) {
-            AtualizarTutor atualizarTutor = new AtualizarTutor();
-            
-            JDialog dialog = new JDialog(this, "Atualizar Tutor", true);
-            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-
-           
-            dialog.getContentPane().add(atualizarTutor);
-
-          
-            dialog.setSize(400, 400);
-            dialog.setLocationRelativeTo(this); 
-
-            dialog.setVisible(true);
-        } else if (jTable2.getModel() instanceof VeterinarioTableModel) {
-            AtualizarVeterinario atualizarVeterinario = new AtualizarVeterinario();
-            
-            JDialog dialog = new JDialog(this, "Atualizar Veterinario", true);
-            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-
-           
-            dialog.getContentPane().add(atualizarVeterinario);
-
-          
-            dialog.setSize(400, 500);
-            dialog.setLocationRelativeTo(this); 
-
-            dialog.setVisible(true);
-        } else if (jTable2.getModel() instanceof AnimalTableModel) {
-            AtualizarAnimal atualizarAnimal = new AtualizarAnimal();
-            
-            JDialog dialog = new JDialog(this, "Atualizar Animal", true);
-            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-
-           
-            dialog.getContentPane().add(atualizarAnimal);
-
-          
-            dialog.setSize(600, 450);
-            dialog.setLocationRelativeTo(this); 
-
-            dialog.setVisible(true);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        dialog.setVisible(true);
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -513,23 +686,32 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,14 +1,16 @@
 package model;
 
-public class ConsultaGeral extends Servico {
+public class ConsultaGeral {
     private int id;
-    private int servicoId;
+    private int animalId;
+    private int veterinarioId;
     private String motivo;
     private String diagnostico;
 
-    public ConsultaGeral(int id, int servicoId, String motivo, String diagnostico) {
+    public ConsultaGeral(int id, int animalId, int veterinarioId, String motivo, String diagnostico) {
         this.id = id;
-        this.servicoId = servicoId;
+        this.animalId = animalId;
+        this.veterinarioId = veterinarioId;
         this.motivo = motivo;
         this.diagnostico = diagnostico;
     }
@@ -16,8 +18,8 @@ public class ConsultaGeral extends Servico {
     public ConsultaGeral() {
     }
     
-    public int getServicoId() {
-        return servicoId;
+    public int getId() {
+        return id;
     }
     
     public String getMotivo() {
@@ -26,5 +28,29 @@ public class ConsultaGeral extends Servico {
 
     public String getDiagnostico() {
         return diagnostico;
+    }
+    
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
+
+    public void setDiagnostico(String diagnostico) {
+        this.diagnostico = diagnostico;
+    }
+    
+       public int getAnimalId() {
+        return animalId;
+    }
+
+    public void setAnimalId(int animalId) {
+        this.animalId = animalId;
+    }
+
+    public int getVeterinarioId() {
+        return veterinarioId;
+    }
+
+    public void setVeterinarioId(int veterinarioId) {
+        this.veterinarioId = veterinarioId;
     }
 }

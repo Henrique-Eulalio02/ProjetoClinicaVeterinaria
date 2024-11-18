@@ -27,13 +27,14 @@ public class ExameDAO {
     }
     
     // Create
-    public Exame create(int servicoId, String tipoExame, String resultados) {
+    public Exame create(int animalId, int veterinarioId, String tipoExame, String resultados) {
         try {          
             PreparedStatement stmt;
-            stmt = DAO.connect().prepareStatement("INSERT INTO exame (servicoId, tipoExame, resultados) VALUES (?,?,?)");
-            stmt.setInt(1, servicoId);
-            stmt.setString(2, tipoExame);
-            stmt.setString(3, resultados);
+            stmt = DAO.connect().prepareStatement("INSERT INTO exame (animalId, veterinarioId, tipoExame, resultados) VALUES (?,?,?,?)");
+            stmt.setInt(1, animalId);
+            stmt.setInt(2, veterinarioId);
+            stmt.setString(3, tipoExame);
+            stmt.setString(4, resultados);
             executeUpdate(stmt);
         } catch (SQLException ex) {
             Logger.getLogger(ExameDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -45,7 +46,7 @@ public class ExameDAO {
     private Exame buildObject(ResultSet rs) {
         Exame exame = null;
         try {
-            exame = new Exame(rs.getInt("id"), rs.getInt("servicoId"), rs.getString("tipoExame"), rs.getString("resultados"));
+            exame = new Exame(rs.getInt("id"), rs.getInt("animalId"), rs.getInt("veterinarioId"), rs.getString("tipoExame"), rs.getString("resultados"));
         } catch (SQLException e) {
             System.err.println("Exception: " + e.getMessage());
         }
@@ -93,11 +94,12 @@ public class ExameDAO {
     public void update(Exame exame) {
         try {
             PreparedStatement stmt;
-            stmt = connect().prepareStatement("UPDATE exame SET servicoId=?, tipoExame=?, resultados=? WHERE id=?");
-            stmt.setInt(1, exame.getServicoId());
-            stmt.setString(2, exame.getTipoExame());
-            stmt.setString(3, exame.getResultados());
-            stmt.setInt(4, exame.getId());
+            stmt = connect().prepareStatement("UPDATE exame SET animalId=?, veterinarioId=?, tipoExame=?, resultados=? WHERE id=?");
+            stmt.setInt(1, exame.getAnimalId());
+            stmt.setInt(2, exame.getVeterinarioId());
+            stmt.setString(3, exame.getTipoExame());
+            stmt.setString(4, exame.getResultados());
+            stmt.setInt(5, exame.getId());
             executeUpdate(stmt);
         } catch (SQLException e) {
             System.err.println("Exception: " + e.getMessage());

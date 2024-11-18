@@ -6,11 +6,14 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import model.Animal;
 import model.AnimalDAO;
+import model.ConsultaGeral;
+import model.ConsultaGeralDAO;
 import model.Tutor;
 import model.TutorDAO;
 import model.Veterinario;
 import model.VeterinarioDAO;
 import view.AnimalTableModel;
+import view.ConsultaTableModel;
 import view.GenericTableModel;
 import view.TutorTableModel;
 import view.VeterinarioTableModel;
@@ -18,6 +21,7 @@ import view.VeterinarioTableModel;
 public class Controller {
     private static Tutor tutorSelecionado = null;
     private static Animal animalSelecionado = null;
+    private static ConsultaGeral consultaSelecionada = null;
     private static Veterinario veterinarioSelecionado = null;
     private static JTextField tutorSelecionadoTextField = null;
     private static JTextField animalSelecionadoTextField = null;
@@ -43,6 +47,10 @@ public class Controller {
         return animalSelecionado;
     }
     
+    public static ConsultaGeral getConsultaSelecionada() {
+        return consultaSelecionada;
+    }
+    
     public static void setSelected(Object selected) {
         if (selected instanceof Tutor) {
             tutorSelecionado = (Tutor) selected;
@@ -53,6 +61,8 @@ public class Controller {
             animalSelecionadoTextField.setText(animalSelecionado.getNome());
         } else if (selected instanceof Veterinario) {
             veterinarioSelecionado = (Veterinario) selected;
+        } else if (selected instanceof ConsultaGeral) {
+            consultaSelecionada = (ConsultaGeral) selected;
         }
     }
     
@@ -81,6 +91,8 @@ public class Controller {
             ((GenericTableModel) table.getModel()).addListOfItems(VeterinarioDAO.getInstance().retrieveBySimilarName(nome));
         } else if (table.getModel() instanceof AnimalTableModel) {
             ((GenericTableModel) table.getModel()).addListOfItems(AnimalDAO.getInstance().retrieveBySimilarName(nome));
+        } else if (table.getModel() instanceof ConsultaTableModel) {
+            ((GenericTableModel) table.getModel()).addListOfItems(ConsultaGeralDAO.getInstance().retrieveByDiagnostico(nome));
         }
     }
     
@@ -94,6 +106,10 @@ public class Controller {
     
     public static List<Object> getAllAnimal() {
         return AnimalDAO.getInstance().retrieveAll();
+    }
+    
+    public static List<Object> getAllConsulta() {
+        return ConsultaGeralDAO.getInstance().retrieveAll();
     }
     
     public static Tutor adicionarTutor(String nome, String endereco, String cpf, String celular) {
@@ -110,6 +126,10 @@ public class Controller {
         return novoVeterinario;
     }
     
+    public static ConsultaGeral adicionarConsulta(String motivo, String diagnostico, int tutorId, int veterinarioId) {
+        return ConsultaGeralDAO.getInstance().create(tutorId, veterinarioId, motivo, diagnostico);
+    }
+    
     public static void removerTutor(Tutor tutor) {
         TutorDAO.getInstance().delete(tutor);
         tutorSelecionadoTextField.setText("");
@@ -124,6 +144,10 @@ public class Controller {
         animalSelecionadoTextField.setText("");
     }
     
+    public static void removerConsulta(ConsultaGeral consulta) {
+        ConsultaGeralDAO.getInstance().delete(consulta);
+    }
+    
     public static void controlaBotaoTodos(JTable table, JTextField texto) {
         if (table.getModel() instanceof TutorTableModel) {
             ((GenericTableModel) table.getModel()).addListOfItems(Controller.getAllTutor());
@@ -134,6 +158,8 @@ public class Controller {
         } else if (table.getModel() instanceof AnimalTableModel) {
             ((GenericTableModel) table.getModel()).addListOfItems(Controller.getAllAnimal());
             texto.setText("");
+        } else if (table.getModel() instanceof ConsultaTableModel) {
+            ((GenericTableModel) table.getModel()).addListOfItems(Controller.getAllConsulta());
         }
     }
     
@@ -150,5 +176,10 @@ public class Controller {
     public static void atualizarAnimal(String nome, String especie, String raca, int idade, String sexo, int tutorId, int veterinarioId) {
         Animal animalAtualizado = new Animal(animalSelecionado.getId(), nome, especie, raca, idade, sexo, tutorId, veterinarioId);
         AnimalDAO.getInstance().update(animalAtualizado);
+    }
+    
+    public static void atualizarConsulta(String motivo, String diagnostico, int animalId, int veterinarioId) {
+        ConsultaGeral cg = new ConsultaGeral(consultaSelecionada.getId(), animalId, veterinarioId, motivo, diagnostico);
+        ConsultaGeralDAO.getInstance().update(cg);
     }
 }
